@@ -700,6 +700,7 @@ int baronRefactor(struct gameState *state){
 
 int minionRefactor(struct gameState *state, int handPos){
     int currentPlayer = whoseTurn(state);
+    int i;
     //+1 action
     state->numActions++;
     
@@ -751,7 +752,7 @@ int minionRefactor(struct gameState *state, int handPos){
     return 0;
 }
 
-int ambassadorRefactor(struct gameState *state, int handPos){
+int ambassadorRefactor(struct gameState *state, int handPos, int choice1, int choice2){
     int currentPlayer = whoseTurn(state);
     int i;
     int j = 0;        //used to check if player has enough cards to discard
@@ -813,6 +814,7 @@ int ambassadorRefactor(struct gameState *state, int handPos){
 }
 
 int tributeRefactor(struct gameState *state){
+    int i;
     int currentPlayer = whoseTurn(state);
     
     if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
@@ -874,10 +876,11 @@ int tributeRefactor(struct gameState *state){
     return 0;
 }
 
-int mineRefactor(struct gameState *state, int handPos){
+int mineRefactor(struct gameState *state, int handPos, int choice1, int choice2){
     int currentPlayer = whoseTurn(state);
+    int i;
     
-    j = state->hand[currentPlayer][choice1];  //store card we will trash
+    int j = state->hand[currentPlayer][choice1];  //store card we will trash
     
     if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
     {
@@ -1039,7 +1042,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return -1;
 			
     case mine:
-            return mineRefactor(state, handPos);
+            return mineRefactor(state, handPos, choice1, choice2);
 
 			
     case remodel:
@@ -1136,7 +1139,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
             return tributeRefactor(state);
 		
     case ambassador:
-            return ambassadorRefactor(state, handPos);
+            return ambassadorRefactor(state, handPos, choice1, choice2);
 		
     case cutpurse:
 
