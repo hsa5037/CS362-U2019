@@ -643,7 +643,7 @@ int getCost(int cardNumber)
   return -1;
 }
 
-int baronRefactor(struct gameState *state){
+int baronRefactor(struct gameState *state, int choice1){
     int currentPlayer = whoseTurn(state);
     
     state->numBuys++;//Increase buys by 1!
@@ -698,7 +698,7 @@ int baronRefactor(struct gameState *state){
     
 }
 
-int minionRefactor(struct gameState *state, int handPos){
+int minionRefactor(struct gameState *state, int handPos, int choice1, int choice2){
     int currentPlayer = whoseTurn(state);
     int i;
     //+1 action
@@ -1094,7 +1094,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case baron:
-        return baronRefactor(state);
+        return baronRefactor(state, choice1, choice2);
 
 		
     case great_hall:
@@ -1109,7 +1109,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case minion:
-            return minionRefactor(state, handPos);
+            return minionRefactor(state, handPos, choice1, choice2);
 
 		
     case steward:
