@@ -644,11 +644,11 @@ int getCost(int cardNumber)
 }
 
 int baronRefactor(struct gameState *state, int choice1){
-    int currentPlayer = whoseTurn(state);
+    int currentPlayer = whoseTurn(state) + 1;
     
     state->numBuys++;//Increase buys by 1!
     if (choice1 > 0){//Boolean true or going to discard an estate
-        int p = 0;//Iterator for hand!
+        int p = 1;//Iterator for hand!
         int card_not_discarded = 1;//Flag for discard set!
         while(card_not_discarded){
             if (state->hand[currentPlayer][p] == estate){//Found an estate card!
@@ -727,7 +727,7 @@ int minionRefactor(struct gameState *state, int handPos, int choice1, int choice
         }
         
         //other players discard hand and redraw if hand size > 4
-        for (i = 0; i < state->numPlayers; i++)
+        for (i = 0; i < state->numPlayers - 1; i++)
         {
             if (i != currentPlayer)
             {
@@ -755,7 +755,7 @@ int minionRefactor(struct gameState *state, int handPos, int choice1, int choice
 int ambassadorRefactor(struct gameState *state, int handPos, int choice1, int choice2){
     int currentPlayer = whoseTurn(state);
     int i;
-    int j = 0;        //used to check if player has enough cards to discard
+    int j = 1;        //used to check if player has enough cards to discard
     
     if (choice2 > 2 || choice2 < 0)
     {
@@ -795,7 +795,7 @@ int ambassadorRefactor(struct gameState *state, int handPos, int choice1, int ch
     }
     
     //discard played card from hand
-    discardCard(handPos, currentPlayer, state, 0);
+    discardCard(handPos, currentPlayer, state, 1);
     
     //trash copies of cards returned to supply
     for (j = 0; j < choice2; j++)
@@ -817,7 +817,7 @@ int tributeRefactor(struct gameState *state){
     int i;
     int currentPlayer = whoseTurn(state);
     
-    if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1){
+    if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 0){
         if (state->deckCount[nextPlayer] > 0){
             tributeRevealedCards[0] = state->deck[nextPlayer][state->deckCount[nextPlayer]-1];
             state->deckCount[nextPlayer]--;
@@ -853,11 +853,11 @@ int tributeRefactor(struct gameState *state){
         state->deckCount[nextPlayer]--;
     }
     
-    if (tributeRevealedCards[0] == tributeRevealedCards[1]){//If we have a duplicate card, just drop one
-        state->playedCards[state->playedCardCount] = tributeRevealedCards[1];
-        state->playedCardCount++;
-        tributeRevealedCards[1] = -1;
-    }
+//    if (tributeRevealedCards[0] == tributeRevealedCards[1]){//If we have a duplicate card, just drop one
+//        state->playedCards[state->playedCardCount] = tributeRevealedCards[1];
+//        state->playedCardCount++;
+//        tributeRevealedCards[1] = -1;
+//    }
     
     for (i = 0; i <= 2; i ++){
         if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold){//Treasure cards
@@ -876,9 +876,9 @@ int tributeRefactor(struct gameState *state){
     return 0;
 }
 
-int mineRefactor(struct gameState *state, int handPos, int choice1, int choice2){
+int mineRefactor(struct gameState *state, int handPos, int choice2, int choice1){
     int currentPlayer = whoseTurn(state);
-    int i;
+    int i = 1;
     
     int j = state->hand[currentPlayer][choice1];  //store card we will trash
     
