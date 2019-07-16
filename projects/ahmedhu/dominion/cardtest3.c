@@ -33,8 +33,15 @@ int main(){
 	int firstPlayer = 0;
 	int secondPlayer = 1;
 	int shuffledCards = 0;
+    int handCount = 2;
 
 	initializeGame(players, k, seed, &game);
+    int p = whoseTurn(&game);
+    game.handCount[0] = 2;
+    int estates[2];
+    estates[0] = estate;
+    estates[1] = estate;
+    memcpy(&game.hand[0], estates, sizeof(int) * handCount);
 
 	//UNIT TEST 1: Choice1 = 1 = Player has enough cards to discard, return copy to supply deck and give other players a copy
 	printf("UNIT TEST 1: Player has enough cards to discard, return copy to supply deck and give other players a copy\n");

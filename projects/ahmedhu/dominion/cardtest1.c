@@ -31,8 +31,16 @@ int main(){
 	int bonus = 0;
 	int firstPlayer = 0;
 	int shuffledCards = 0;
+    int handCount = 2;
 
 	initializeGame(players, k, seed, &game);
+    int p = whoseTurn(&game);
+    game.handCount[0] = 2;
+    int estates[2];
+    estates[0] = estate;
+    estates[1] = estate;
+    memcpy(&game.hand[0], estates, sizeof(int) * handCount);
+    
 
 	//UNIT TEST 1: Choice1 = 1 = Buys increase by 1 and Estate card is discarded when found for +4 coins
 	printf("UNIT TEST 1: Choice1 = 1 = Buys increase by 1 and Estate card is discarded when found for +4 coins\n");
@@ -46,7 +54,7 @@ int main(){
 
 	cardEffect(baron, choice1, choice2, choice3, &test, handpos, &bonus);
 
-	int newCoins = 2;
+	int newCoins = 4;
 	int buys = 1;
 
 	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] - discarded - 1);
