@@ -1,0 +1,66 @@
+#include "dominion.h"
+#include "dominion_helpers.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "ASSERT.h"
+#include "rngs.h"
+#include "interface.h"
+
+int ASSERT(int x, char *str){
+	if (!x){
+		printf ("TEST FAILED: %s", str);
+		return 1;
+	}
+	else {
+		printf ("TEST SUCCESSFUL: %s", str);
+		return 0;
+	}
+}
+
+//Tests the Baron card
+int main(){
+	printf("Initializing Baron Card Test.\n");
+	int discarded = 1;
+
+
+	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	struct gameState game;
+	int players = 2;
+	int seed = 1000;
+	int handpos = 0;
+	int bonus = 0;
+	int firstPlayer = 0;
+	int shuffledCards = 0;
+
+	initializeGame(players, k, seed, &game);
+
+	//UNIT TEST 1: Choice1 = 1 = Buys increase by 1 and Estate card is discarded when found for +4 coins
+	printf("UNIT TEST 1: Choice1 = 1 = Buys increase by 1 and Estate card is discarded when found for +4 coins\n");
+
+	//copy game state into test case
+	struct gameState test;
+	memcpy(&test, &game, sizeof(struct gameState));
+	int choice1 = 1;
+	int choice2 = 0;
+	int choice3 = 0;
+
+	cardEffect(baron, choice1, choice2, choice3, &test, handpos, &bonus);
+
+	int newCoins = 2;
+	int buys = 1;
+
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] - discarded - 1);
+	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], game.deckCount[firstPlayer] + shuffledCards);
+	printf("Coins = %d, Expected Coins = %d\n", test.coins, game.coins + newCoins);
+	printf("Buys = %d, Expected Buys = %d\n", test.numBuys, game.numBuys + buys);
+	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] - discarded - 1, "Hand Count \n");
+	ASSERT(test.deckCount[firstPlayer] == game.deckCount[firstPlayer] + shuffledCards, "Deck Count \n");
+	ASSERT(test.coins == game.coins + newCoins, "Coins\n");
+	ASSERT(test.numBuys == game.numBuys + buys, "Buys\n");
+
+
+	printf("\n ~~~~~~~~~~~ BARON TESTING COMPLETE ~~~~~~~~~~~~~ \n\n ");
+
+
+	return 0;
+}
