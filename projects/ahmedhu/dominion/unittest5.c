@@ -24,7 +24,7 @@ int main(){
 	int discarded = 1;
 
 
-	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	int *k = kingdomCards(ambassador, village, minion, gardens, smithy, tribute, baron, cutpurse, mine, outpost);
 	struct gameState game;
 	int players = 2;
 	int seed = 1000;
@@ -47,6 +47,15 @@ int main(){
 	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], game.deckCount[firstPlayer] - 1);
 	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] + 1, "Hand Count \n");
 	ASSERT(test.deckCount[firstPlayer] == game.deckCount[firstPlayer] - 1, "Deck Count \n");
+
+	//Same test but with a deck count of 0 
+	test.deckCount[firstPlayer] = 0;
+	drawCard(firstPlayer, &test);
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] + 1);
+	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], 0);
+	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] + 1, "Hand Count \n");
+	ASSERT(test.deckCount[firstPlayer] == 0, "Deck Count \n");
+
 
 
 

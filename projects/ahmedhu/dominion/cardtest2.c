@@ -24,7 +24,7 @@ int main(){
 	int discarded = 1;
 
 
-	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	int *k = kingdomCards(ambassador, village, minion, gardens, smithy, tribute, baron, cutpurse, mine, outpost);
 	struct gameState game;
 	int players = 2;
 	int seed = 1000;

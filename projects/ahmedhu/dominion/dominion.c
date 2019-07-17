@@ -905,7 +905,7 @@ int mineRefactor(struct gameState *state, int handPos, int choice2, int choice1)
     discardCard(handPos, currentPlayer, state, 0);
     
     //discard trashed card
-    for (i = 0; i < state->handCount[currentPlayer]; i++)
+    for (i = 1; i < state->handCount[currentPlayer]; i++)
     {
         if (state->hand[currentPlayer][i] == j)
         {

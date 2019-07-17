@@ -24,7 +24,7 @@ int main(){
 	int discarded = 1;
 
 
-	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	int *k = kingdomCards(ambassador, village, minion, gardens, smithy, tribute, baron, cutpurse, mine, outpost);
 	struct gameState game;
 	int players = 2;
 	int seed = 1000;
@@ -54,8 +54,6 @@ int main(){
 		if(winners[i] == 1)
 			winner = winners[i];
 	}
-
-
 
 	printf("%d is the winner! Expected Player 1 (0)\n", winner);
 	ASSERT(winner == 0, "Correct Winner\n");

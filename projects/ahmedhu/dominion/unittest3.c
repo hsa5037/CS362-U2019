@@ -24,7 +24,7 @@ int main(){
 	int discarded = 1;
 
 
-	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	int *k = kingdomCards(ambassador, village, minion, gardens, smithy, tribute, baron, cutpurse, mine, outpost);
 	struct gameState game;
 	int players = 2;
 	int seed = 1000;
@@ -39,7 +39,7 @@ int main(){
 	endTurn(&game);
 
 	//TESTS WHETHER THE ENDTURN FUNCTION CHANGES THE TURN TO THE NEXT PLAYER
-	printf("It is %d's turn. Expected to be Player %d's turn\n", whoseTurn(&game), a);
+	printf("It is %d's turn. Expected to be Player %d's turn\n", whoseTurn(&game), a + 1);
 	ASSERT(game.whoseTurn == 1, "Correct Player's Turn\n");
 
 

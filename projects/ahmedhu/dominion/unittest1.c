@@ -24,7 +24,7 @@ int main(){
 	int discarded = 1;
 
 
-	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	int *k = kingdomCards(ambassador, village, minion, gardens, smithy, tribute, baron, cutpurse, mine, outpost);
 	struct gameState game;
 	int players = 2;
 	int seed = 1000;
@@ -50,6 +50,8 @@ int main(){
 	ASSERT(supplyCount(copper, &game) == 46, "Copper Count\n");
 	ASSERT(supplyCount(silver, &game) == 40, "Silver Count\n"); 
 	ASSERT(supplyCount(gold, &game) == 30, "Gold Count\n");
+
+	initializeGame(4, k, seed, &game);
 
 	printf("\n ~~~~~~~~~~~ initializeGame TESTING COMPLETE ~~~~~~~~~~~~~ \n\n ");
 

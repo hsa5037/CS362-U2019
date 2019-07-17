@@ -23,7 +23,7 @@ int main(){
 	int discarded = 1;
 
 
-	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
+	int *k = kingdomCards(ambassador, village, minion, gardens, smithy, tribute, baron, cutpurse, mine, outpost);
 	struct gameState game;
 	int players = 2;
 	int seed = 1000;
@@ -41,11 +41,14 @@ int main(){
 	//copy game state into test case
 	struct gameState test;
 	game.hand[firstPlayer][0] = copper;
+	game.hand[firstPlayer][1] = copper;
+	game.hand[firstPlayer][2] = copper;
+	game.hand[firstPlayer][3] = copper;
 
 
 	memcpy(&test, &game, sizeof(struct gameState));
-	int choice1 = 0;
-	int choice2 = silver;
+	int choice1 = 1;
+	int choice2 = 0;
 	int choice3 = 0;
 
 	cardEffect(mine, choice1, choice2, choice3, &test, handpos, &bonus);
@@ -53,10 +56,21 @@ int main(){
 	int newCoins = 3;
 	int buys = 1;
 
-	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] - discarded - 1);
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer]);
 	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], game.deckCount[firstPlayer] + shuffledCards);
 	printf("Coins = %d, Expected Coins = %d\n", test.coins, game.coins + newCoins);
-	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] - discarded - 1, "Hand Count\n");
+	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer], "Hand Count\n");
+	ASSERT(test.deckCount[firstPlayer] == game.deckCount[firstPlayer] + shuffledCards, "Deck Count\n");
+	ASSERT(test.coins == game.coins + newCoins, "Coins\n");
+
+	//UNIT TEST 2: Choice1 and Choice2 switched to account for bug introduced in Assignment2
+	printf("UNIT TEST 2: Choice1 and Choice2 switched to account for bug introduced in Assignment2\n");
+	cardEffect(mine, 0, choice1, choice3, &test, handpos, &bonus);
+
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer]);
+	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], game.deckCount[firstPlayer] + shuffledCards);
+	printf("Coins = %d, Expected Coins = %d\n", test.coins, game.coins + newCoins);
+	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer], "Hand Count\n");
 	ASSERT(test.deckCount[firstPlayer] == game.deckCount[firstPlayer] + shuffledCards, "Deck Count\n");
 	ASSERT(test.coins == game.coins + newCoins, "Coins\n");
 
