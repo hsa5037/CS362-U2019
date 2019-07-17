@@ -39,7 +39,8 @@ int main(){
     int estates[2];
     estates[0] = estate;
     estates[1] = estate;
-    memcpy(&game.hand[0], estates, sizeof(int) * handCount);
+    memcpy(game.hand[0], estates, sizeof(int) * handCount);
+    game.supplyCount[estate] = 10;
     
 
 	//UNIT TEST 1: Choice1 = 1 = Buys increase by 1 and Estate card is discarded when found for +4 coins
@@ -65,6 +66,12 @@ int main(){
 	ASSERT(test.deckCount[firstPlayer] == game.deckCount[firstPlayer] + shuffledCards, "Deck Count \n");
 	ASSERT(test.coins == game.coins + newCoins, "Coins\n");
 	ASSERT(test.numBuys == game.numBuys + buys, "Buys\n");
+
+	printf("UNIT TEST 2: CHOICE1 = 2 = Player should gain an estate card\n");
+	choice1 = 0;
+	cardEffect(baron, choice1, choice2, choice3, &test, handpos, &bonus);
+	printf("Estate Count = %d, Expected Count = 3\n", test.hand[firstPlayer][3]);
+	ASSERT(test.hand[firstPlayer][3] == estate, "Gain Estate Card Test\n");
 
 
 	printf("\n ~~~~~~~~~~~ BARON TESTING COMPLETE ~~~~~~~~~~~~~ \n\n ");
