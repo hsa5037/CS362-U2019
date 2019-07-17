@@ -59,7 +59,7 @@ int main(){
 
 	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] + 2);
 	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], game.deckCount[firstPlayer] + shuffledCards);
-	printf("Player 2 Hand Count = %d, Expected Count = %d\n", test.handCount[secondPlayer], game.handCount[secondPlayer];
+	printf("Player 2 Hand Count = %d, Expected Count = %d\n", test.handCount[secondPlayer], game.handCount[secondPlayer]);
 	printf("Coins = %d, Expected Coins = %d\n", test.coins, game.coins);
 	printf("Actions = %d, Expected Actions = %d\n", test.numActions, game.numActions);
 
