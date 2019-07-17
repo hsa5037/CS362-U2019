@@ -20,7 +20,7 @@ int ASSERT(int x, char *str){
 //Tests the Baron card
 int main(){
 	printf("Initializing Baron Card Test.\n");
-	int discarded = 1;
+	//int discarded = 1;
 
 
 	int *k = kingdomCards(adventurer, village, minion, mine, smithy, tribute, baron, cutpurse, mine, outpost);
@@ -58,11 +58,11 @@ int main(){
 	int newCoins = 4;
 	int buys = 1;
 
-	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] - discarded - 1);
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] - 1);
 	printf("Deck Count = %d, Expected Count = %d\n", test.deckCount[firstPlayer], game.deckCount[firstPlayer] + shuffledCards);
 	printf("Coins = %d, Expected Coins = %d\n", test.coins, game.coins + newCoins);
 	printf("Buys = %d, Expected Buys = %d\n", test.numBuys, game.numBuys + buys);
-	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] - discarded - 1, "Hand Count \n");
+	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer]- 1, "Hand Count \n");
 	ASSERT(test.deckCount[firstPlayer] == game.deckCount[firstPlayer] + shuffledCards, "Deck Count \n");
 	ASSERT(test.coins == game.coins + newCoins, "Coins\n");
 	ASSERT(test.numBuys == game.numBuys + buys, "Buys\n");
@@ -70,8 +70,15 @@ int main(){
 	printf("UNIT TEST 2: CHOICE1 = 2 = Player should gain an estate card\n");
 	choice1 = 0;
 	cardEffect(baron, choice1, choice2, choice3, &test, handpos, &bonus);
-	printf("Estate Count = %d, Expected Count = 3\n", test.hand[firstPlayer][3]);
-	ASSERT(test.hand[firstPlayer][3] == estate, "Gain Estate Card Test\n");
+	int estateCount = 0;
+	for (int i = 0; i <= 2; i++ ){
+		if (test.hand[firstPlayer][i] == estate){
+			estateCount++;
+		}
+	}
+
+	printf("Estate Count = %d, Expected Count = 2\n", estateCount);
+	ASSERT(estateCount == 2, "Gain Estate Card Test\n");
 
 
 	printf("\n ~~~~~~~~~~~ BARON TESTING COMPLETE ~~~~~~~~~~~~~ \n\n ");

@@ -59,6 +59,16 @@ int main(){
 	ASSERT(test.coins == game.coins + newCoins, "Coins\n");
 	ASSERT(test.numActions == game.numActions + actions, "Actions\n");
 
+	//UNIT TEST 2: Choice2 = 1 = discard hand/redraw 4. other players with handCount > 5 discard hands
+	choice1 = 0;
+	choice2 = 1;
+	test.handCount[1] = 6;
+	cardEffect(minion, choice1, choice2, choice3, &test, handpos, &bonus);
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], 4);
+	printf("Other Player Hand Count = %d, Expected Count = 4\n", test.handCount[1]);
+	ASSERT(test.handCount[firstPlayer] == 4, "Hand Count\n");
+	ASSERT(test.handCount[1] == 4, "Hand Count\n");
+
 
 	printf("\n ~~~~~~~~~~~ MINION TESTING COMPLETE ~~~~~~~~~~~~~ \n\n ");
 

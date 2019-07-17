@@ -50,16 +50,16 @@ int main(){
 	struct gameState test;
 	memcpy(&test, &game, sizeof(struct gameState));
 	int choice1 = 1;
-	int choice2 = 2;
+	int choice2 = 1;
 	int choice3 = 0;
 
 	cardEffect(ambassador, choice1, choice2, choice3, &test, handpos, &bonus);
 
 
-	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer] - discarded - choice2);
+	printf("Hand Count = %d, Expected Count = %d\n", test.handCount[firstPlayer], game.handCount[firstPlayer]- choice2);
 	printf("Supply Count = %d, Expected Count = %d\n", test.supplyCount[test.hand[firstPlayer][choice1]], game.supplyCount[game.hand[firstPlayer][choice1]] + choice2);
 	printf("Player 2 Hand Count = %d, Expected Count = %d\n", test.handCount[secondPlayer], game.handCount[secondPlayer] + 1);
-	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] - discarded - choice2, "Hand Count]\n");
+	ASSERT(test.handCount[firstPlayer] == game.handCount[firstPlayer] - choice2, "Hand Count]\n");
 	ASSERT(test.supplyCount[test.hand[firstPlayer][choice1]] == game.supplyCount[game.hand[firstPlayer][choice1]] + choice2, "Supply Count\n");
 	ASSERT(test.handCount[secondPlayer] == game.handCount[secondPlayer] + 1, "Player 2 Hand Count\n");
 
