@@ -2,7 +2,7 @@
 #include "dominion_helpers.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "ASSERT.h"
+#include "assert.h"
 #include "rngs.h"
 #include "interface.h"
 
