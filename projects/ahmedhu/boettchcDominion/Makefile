@@ -29,6 +29,40 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+randomtestresults: randomtestcard1.c randomtestcard2.c randomtestcard3.c dominion.o rngs.o
+	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	gcc -o randomtestcard3 -g randomtestcard3.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard1 &> randomtestresults.out
+	./randomtestcard2 >> randomtestresults.out
+	./randomtestcard3 >> randomtestresults.out
+	gcov -c -b -f dominion.c >> randomtestresults.out
+	cat dominion.c.gcov >> randomtestresults.out
+
+unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c cardtest5.c dominion.o rngs.o
+	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
+	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
+	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+	gcc -o cardtest5 -g cardtest5.c dominion.o rngs.o $(CFLAGS)
+	gcc -o unittest1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
+	gcc -o unittest2 -g unittest2.c dominion.o rngs.o $(CFLAGS)
+	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
+	gcc -o unittest5 -g unittest5.c dominion.o rngs.o $(CFLAGS)
+	./cardtest1 &> unittestresults.out
+	./cardtest2 >> unittestresults.out
+	./cardtest3 >> unittestresults.out
+	./cardtest4 >> unittestresults.out
+	./cardtest5 >> unittestresults.out
+	./unittest1 >> unittestresults.out
+	./unittest2 >> unittestresults.out
+	./unittest3 >> unittestresults.out
+	./unittest4 >> unittestresults.out
+	./unittest5 >> unittestresults.out	
+	gcov -b -f dominion.c >> unittestresults.out
+	cat dominion.c.gcov >> unittestresults.out 	
+
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
