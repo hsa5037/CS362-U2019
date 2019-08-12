@@ -1,6 +1,9 @@
-#Java
+#Java and Java IDEs
 **/*.class
 *.idea
+lib
+META-INF
+*.iml
 
 # Prerequisites
 *.d
