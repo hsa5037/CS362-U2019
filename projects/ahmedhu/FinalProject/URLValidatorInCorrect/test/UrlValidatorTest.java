@@ -16,6 +16,7 @@
  */
 
 import junit.framework.TestCase;
+import java.util.Random;
 
 /**
  * Performs Validation Test for url validations.
@@ -47,6 +48,17 @@ protected void setUp() {
                 + UrlValidator.NO_FRAGMENTS;
 
         testIsValid(testUrlPartsOptions, options);
+   }
+
+   public void testNotSoRandomIsValid() {
+        testNotSoRandomIsValid(testUrlParts, UrlValidator.ALLOW_ALL_SCHEMES);
+        setUp();
+        long options =
+                UrlValidator.ALLOW_2_SLASHES
+                        + UrlValidator.ALLOW_ALL_SCHEMES
+                        + UrlValidator.NO_FRAGMENTS;
+
+        testNotSoRandomIsValid(testUrlPartsOptions, options);
    }
 
    public void testIsValidScheme() {
@@ -122,7 +134,69 @@ protected void setUp() {
       }
    }
 
-   public void testValidator202() {
+    /**
+     * Create set of tests by taking the testUrlXXX arrays and
+     * running through all possible permutations of their combinations.
+     *
+     * @param testObjects Used to create a url.
+     */
+    public void testNotSoRandomIsValid(Object[] testObjects, long options) {
+        UrlValidator urlVal = new UrlValidator(null, null, options);
+        int statusPerLine = 60;
+        int printed = 0;
+        if (printIndex) {
+            statusPerLine = 6;
+        }
+        int testCount = 0;
+        StringBuilder testBuffer;
+
+        //https://stackoverflow.com/questions/363681/how-do-i-generate-random-integers-within-a-specific-range-in-java
+        //https://stackoverflow.com/questions/732034/getting-unixtime-in-java
+        Random rand = new Random(System.currentTimeMillis() / 1000L);
+        int randomNum = 0;
+        int[] randInts;
+        for(int r=0; r < 65535; r++)
+        {
+            randInts = new int[testPartsIndex.length];
+            for (int i = 0; i < randInts.length; i++)
+            {
+                randInts[i] = rand.nextInt(( ((ResultPair[])(testObjects[i])).length - 0) + 0 );
+            }
+            testBuffer = new StringBuilder();
+            boolean expected = true;
+            for (int p = 0; p < randInts.length; p++)
+            {
+                //int index = testPartsIndex[testPartsIndexIndex];
+                ResultPair[] part = (ResultPair[]) testObjects[p];
+                testBuffer.append(part[randInts[p]].item);
+                expected &= part[randInts[p]].valid;
+            }
+            String url = testBuffer.toString();
+            boolean result = urlVal.isValid(url);
+            assertEquals(url, expected, result);
+            if (printStatus) {
+                if (printIndex) {
+                    System.out.print(testPartsIndextoString());
+                } else {
+                    if (result == expected) {
+                        System.out.print('.');
+                    } else {
+                        System.out.print('X');
+                    }
+                }
+                printed++;
+                if (printed == statusPerLine) {
+                    System.out.println();
+                    printed = 0;
+                }
+            }
+        }
+        if (printStatus) {
+            System.out.println();
+        }
+    }
+
+    public void testValidator202() {
        String[] schemes = {"http","https"};
        UrlValidator urlValidator = new UrlValidator(schemes, UrlValidator.NO_FRAGMENTS);
        assertTrue(urlValidator.isValid("http://l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.l.org"));
@@ -493,6 +567,14 @@ protected void setUp() {
        assertFalse(validator.isValid("http://example.com/serach?address=Main Avenue"));
        assertTrue(validator.isValid("http://example.com/serach?address=Main%20Avenue"));
        assertTrue(validator.isValid("http://example.com/serach?address=Main+Avenue"));
+   }
+
+   public void testAdHoc1()
+   {
+       String url = "ftp://go.cc:0/test1/file?action=view";
+       long options = UrlValidator.ALLOW_2_SLASHES + UrlValidator.ALLOW_ALL_SCHEMES + UrlValidator.NO_FRAGMENTS;
+       UrlValidator uv = new UrlValidator(null, null, options);
+       uv.isValid(url);
    }
 
    //-------------------- Test data for creating a composite URL
