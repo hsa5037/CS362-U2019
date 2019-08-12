@@ -568,6 +568,25 @@ protected void setUp() {
        assertTrue(validator.isValid("http://example.com/serach?address=Main%20Avenue"));
        assertTrue(validator.isValid("http://example.com/serach?address=Main+Avenue"));
    }
+   
+   public void testValidatorValidateValidIPV6AddressesFromFile() {
+	   //now that we have list of 100 URL's from test file, loop through and test
+	   try (BufferedReader reader = new BufferedReader(new FileReader(new File("randomIPV6.txt").getAbsolutePath()))) {
+		    String line;
+		    while ((line = reader.readLine()) != null) {
+		    	//System.out.println(line);
+		    	UrlValidator validator = new UrlValidator();
+		        String url = String.format("http://[%s]:80/index.html", line); //"http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html";
+		        assertTrue("IPv6 address URL should validate: " + url, validator.isValid(url));
+		    }
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}       
+    }
 
    public void testAdHoc1()
    {
