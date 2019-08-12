@@ -576,8 +576,13 @@ protected void setUp() {
 		    while ((line = reader.readLine()) != null) {
 		    	//System.out.println(line);
 		    	UrlValidator validator = new UrlValidator();
-		        String url = String.format("http://[%s]:80/index.html", line); //"http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html";
-		        assertTrue("IPv6 address URL should validate: " + url, validator.isValid(url));
+		    	if (line == "http://localhost/" || line == "http://machine/") {
+			        assertTrue("IPv6 address URL should validate: " + line, validator.isValid(line));
+		    	}
+		    	else {
+		    		String url = String.format("http://[%s]:80/index.html", line); //"http://[FEDC:BA98:7654:3210:FEDC:BA98:7654:3210]:80/index.html";
+		    		assertTrue("IPv6 address URL should validate: " + url, validator.isValid(url));
+		    	}
 		    }
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

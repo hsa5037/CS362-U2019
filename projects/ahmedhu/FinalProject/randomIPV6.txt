@@ -98,3 +98,5 @@ b9ef:7c35:148b:f4b7:886c:6fae:f940:20c7
 eeca:1e7c:319:1506:4873:76c2:9eb3:d68
 d753:2d99:211f:1ed3:4787:e75c:9bba:d784
 39a7:da3d:63a6:8fb:c79a:4f86:a26f:8a45
+http://localhost/
+http://machine/
